@@ -1,0 +1,10 @@
+.env
+.venv/
+__pycache__/
+data/
+out/
+train*.jsonl
+smoke.jsonl
+results_interim.md
+dataset-choice.md
+finetune_single_device.py
