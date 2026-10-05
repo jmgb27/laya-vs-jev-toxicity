@@ -38,7 +38,7 @@ You need Python 3.12 and, for training, a CUDA GPU (I used a 24 GB RTX 4090).
 
 ```bash
 uv venv --python 3.12 .venv
-uv pip install --python .venv laya pyarrow
+uv pip install --python .venv -r requirements.txt
 .venv/bin/python prep.py                         # downloads Civil Comments, writes train/test
 .venv/bin/python predict.py laya --device cuda --out preds_laya_base.jsonl
 ```
