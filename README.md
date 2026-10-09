@@ -2,16 +2,19 @@
 
 These are the scripts, test comments and every model's answers behind this blog post:
 
-**[Laya vs Jev on toxicity: 83% vs 27% agreement with raters after fine-tuning](https://johnmark.dev/blog/laya-vs-jev-toxicity-fine-tune)**
+**[Fine-tuned Laya vs paid Jev: 83% to 27% on toxic comments](https://johnmark.dev/blog/laya-vs-jev-toxicity-fine-tune)**
 
-I asked two decision models the same seven yes/no questions about 2,000 [Civil Comments](https://huggingface.co/datasets/google/civil_comments): TypeSafe's paid Jev API and [Laya](https://github.com/NandhaKishorM/laya), an open model. Then I fine-tuned Laya for about two hours on one RTX 4090. The table shows how often each model gave the same yes/no as most human raters on all seven questions:
+I asked two decision models the same seven yes/no questions about 2,000 [Civil Comments](https://huggingface.co/datasets/google/civil_comments): TypeSafe's paid Jev API and [Laya](https://github.com/NandhaKishorM/laya), an open model. Then I fine-tuned Laya for about two hours on one RTX 4090. The table shows how often each model gave the same yes/no as at least half of the human raters on all seven questions (a 50/50 split counts as yes):
 
 | | All 7 questions, answers at face value | All 7, cut-off tuned |
 |---|---|---|
 | A judge that always says "fine" | 71% | 71% |
-| Jev 1.13 (OpenRouter) | 27% | 68% |
+| Jev 1.13 (OpenRouter) | 27% | 71% |
 | Laya, out of the box | 61% | 79% |
+| Laya, 3-minute trial fine-tune (1,000 comments) | 81% | 80% |
 | Laya, fine-tuned | 83% | 81% |
+
+Tuned cut-offs are searched from 0 to 1 in steps of 0.01. Until 9 Oct 2026 the search stopped at 0.95, which capped Jev at 68%.
 
 The first fine-tune used yes/no questions only, and it broke multiple-choice answers (AG News topics fell from 95% to 4%). Mixing AG News questions into a second run brought them back to 94%. The post has the whole story and its caveats.
 
@@ -23,11 +26,11 @@ The first fine-tune used yes/no questions only, and it broke multiple-choice ans
 | `replay.py` | Mixes 14,000 AG News questions into the training file (the fix for the forgetting) |
 | `predict.py` | Answers the test set with Laya (local) or Jev (OpenRouter), one line per comment |
 | `score.py` | Agreement with the raters: correlation, Brier, AUROC, the split-vote slice and latency |
-| `majority.py` | The plain-language headline metric: same yes/no as most raters, at face value and with tuned cut-offs |
+| `majority.py` | The plain-language headline metric: same yes/no as at least half of the raters, at face value and with tuned cut-offs, plus a rough natural-mix estimate |
 | `ci.py` | Paired bootstrap 95% intervals between two models |
 | `forget.py` | The forgetting check: AG News, DAIR Emotion and typed-decisions accuracy |
 | `slots.py`, `diag.py` | The checks that the broken checkpoint wasn't stuck on an option position |
-| `charts.py` | The post's charts |
+| `charts.py` | Earlier SVG versions of the post's charts |
 | `test.jsonl`, `test_w2.jsonl` | The 2,000 test comments with both question wordings, and the raters' shares |
 | `preds_*.jsonl` | Every model's answer to every test comment, including Jev's |
 | `results.md`, `numbers.md` | The score tables and every number quoted in the post |

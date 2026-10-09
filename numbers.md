@@ -154,3 +154,50 @@ all 7, Laya, fine-tuned (final) minus Laya, as shipped: +0.220 [+0.199, +0.239]
 all 7, First fine-tune (toxicity only) minus Jev: +0.457 [+0.433, +0.481]
 all 7, Laya, as shipped minus Jev: +0.243 [+0.216, +0.270]
 all 7, First fine-tune (toxicity only) minus Laya, as shipped: +0.214 [+0.195, +0.233]
+
+## Majority match, finer cut-off grid (majority.py, 2026-10-09; supersedes the tuned column above)
+
+The old 0.05-0.95 grid capped Jev, whose best cut-offs sat at 0.95 on 4 of 7 questions. Grid is now 0 to 1 in steps of 0.01 plus "never yes". Face-value (0.5) numbers are unchanged. An exact 50/50 rater split counts as yes: 67 of the 594 split-vote comments are exact ties, so the share where at least half of raters said toxic is 61.4%, or 50.2% if ties count as no.
+
+| model | toxicity | severe_toxicity | obscene | threat | insult | identity_attack | sexual_explicit | all 7 | all 7, tuned |
+|---|---|---|---|---|---|---|---|---|---|
+| Always says fine | 71.7% | 100.0% | 97.8% | 99.2% | 77.7% | 98.0% | 99.0% | 71.2% | 71.2% |
+| Jev | 67.6% | 69.6% | 94.5% | 96.9% | 46.1% | 93.7% | 95.3% | 26.6% | 70.8% |
+| Laya, as shipped | 85.5% | 82.7% | 90.5% | 93.8% | 86.0% | 95.9% | 95.2% | 61.3% | 78.5% |
+| First fine-tune (toxicity only) | 88.0% | 100.0% | 98.7% | 99.3% | 90.1% | 98.2% | 99.2% | 83.8% | 81.5% |
+| Trial fine-tune (1,000 comments, 1 epoch) | 87.0% | 100.0% | 98.0% | 99.2% | 89.1% | 98.1% | 99.2% | 81.0% | 79.8% |
+| Laya, fine-tuned (final) | 87.1% | 100.0% | 98.6% | 99.3% | 89.8% | 98.6% | 99.2% | 83.2% | 81.2% |
+all 7, Laya, fine-tuned (final) minus Jev: +0.567 [+0.542, +0.591]
+all 7, Laya, as shipped minus Jev: +0.347 [+0.323, +0.371]
+all 7, Laya, fine-tuned (final) minus Laya, as shipped: +0.220 [+0.199, +0.239]
+all 7, Jev minus Always says fine: -0.446 [-0.469, -0.421]
+all 7, tuned, Laya, fine-tuned (final) minus Jev: +0.104 [+0.084, +0.124]
+all 7, tuned, Laya, as shipped minus Jev: +0.078 [+0.059, +0.097]
+all 7, tuned, Laya, fine-tuned (final) minus Laya, as shipped: +0.026 [+0.011, +0.041]
+all 7, tuned, Jev minus Always says fine: -0.004 [-0.019, +0.012]
+
+### Second wording (majority.py --w2)
+
+| model | toxicity | severe_toxicity | obscene | threat | insult | identity_attack | sexual_explicit | all 7 | all 7, tuned |
+|---|---|---|---|---|---|---|---|---|---|
+| Always says fine | 71.7% | 100.0% | 97.8% | 99.2% | 77.7% | 98.0% | 99.0% | 71.2% | 71.2% |
+| Jev | 73.2% | 85.2% | 94.8% | 98.5% | 53.9% | 91.9% | 98.7% | 37.2% | 69.8% |
+| Laya, as shipped | 87.5% | 79.8% | 84.9% | 92.5% | 89.8% | 96.8% | 93.7% | 61.6% | 79.8% |
+| First fine-tune (toxicity only) | 87.4% | 100.0% | 98.8% | 99.2% | 90.0% | 98.2% | 99.1% | 83.0% | 82.5% |
+all 7, First fine-tune (toxicity only) minus Jev: +0.457 [+0.433, +0.481]
+all 7, Laya, as shipped minus Jev: +0.243 [+0.216, +0.270]
+all 7, First fine-tune (toxicity only) minus Laya, as shipped: +0.214 [+0.195, +0.233]
+all 7, Jev minus Always says fine: -0.339 [-0.365, -0.314]
+all 7, tuned, First fine-tune (toxicity only) minus Jev: +0.128 [+0.108, +0.148]
+all 7, tuned, Laya, as shipped minus Jev: +0.100 [+0.081, +0.118]
+all 7, tuned, First fine-tune (toxicity only) minus Laya, as shipped: +0.028 [+0.014, +0.042]
+all 7, tuned, Jev minus Always says fine: -0.014 [-0.031, +0.004]
+
+### Natural mix, rough (majority.py, 2026-10-09)
+
+Always says fine: 90.0% at face value, 90.0% tuned
+Jev: 42.9% at face value, 87.1% tuned
+Laya, as shipped: 83.0% at face value, 90.9% tuned
+First fine-tune (toxicity only): 93.4% at face value, 92.3% tuned
+Trial fine-tune (1,000 comments, 1 epoch): 92.4% at face value, 91.6% tuned
+Laya, fine-tuned (final): 93.2% at face value, 91.9% tuned
