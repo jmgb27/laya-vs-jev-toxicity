@@ -195,9 +195,11 @@ all 7, tuned, Jev minus Always says fine: -0.014 [-0.031, +0.004]
 
 ### Natural mix, rough (majority.py, 2026-10-09)
 
-Always says fine: 90.0% at face value, 90.0% tuned
-Jev: 42.9% at face value, 87.1% tuned
-Laya, as shipped: 83.0% at face value, 90.9% tuned
-First fine-tune (toxicity only): 93.4% at face value, 92.3% tuned
-Trial fine-tune (1,000 comments, 1 epoch): 92.4% at face value, 91.6% tuned
-Laya, fine-tuned (final): 93.2% at face value, 91.9% tuned
+Group shares of the full test split (97,320 comments): toxicity 0: 70.15%; (0, 0.2]: 9.07%; (0.2, 0.5]: 14.83%; above 0.5: 5.95%. (An earlier version used 70.2/9.0/12.8/8.0, which put exact 50/50 ties in the wrong group.)
+
+Always says fine: 91.8% at face value, 91.8% tuned
+Jev: 43.0% at face value, 88.0% tuned
+Laya, as shipped: 84.1% at face value, 91.3% tuned
+First fine-tune (toxicity only): 93.8% at face value, 92.5% tuned
+Trial fine-tune (1,000 comments, 1 epoch): 92.9% at face value, 91.9% tuned
+Laya, fine-tuned (final): 93.5% at face value, 92.2% tuned

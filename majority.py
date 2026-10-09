@@ -61,10 +61,11 @@ for label, X in [("all 7", M), ("all 7, tuned", T)]:
         print(f"{label}, {a} minus {b}: {X[a].mean() - X[b].mean():+.3f} [{lo:+.3f}, {hi:+.3f}]")
 
 # The test set samples four toxicity groups equally (prep.py). Reweight them to their shares of the
-# whole Civil Comments test split (numbers.md) for a rough natural-mix estimate.
+# whole Civil Comments test split (97,320 comments, same boundaries as prep.py's groups) for a
+# rough natural-mix estimate.
 # ponytail: tuned cut-offs were fitted on the balanced mix, so the tuned estimate is pessimistic.
 GROUPS = [(0.0, 0.0), (1e-9, 0.2), (0.2, 0.5), (0.5, 1.0)]
-SHARE = np.array([0.702, 0.090, 0.128, 0.080])
+SHARE = np.array([0.7015, 0.0907, 0.1483, 0.0595])  # 0, (0, .2], (.2, .5], above .5
 tox = {c["id"]: c["gold"]["toxicity"]["probabilities"]["true"] for c in map(json.loads, open("test.jsonl"))}
 g = np.array([next(k for k, (lo, hi) in enumerate(GROUPS) if lo <= tox[i] <= hi) for i in ids])
 gt = np.concatenate([g[~half], g[half]])  # row order of T
